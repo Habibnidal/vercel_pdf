@@ -57,13 +57,9 @@ app.post("/generate-invoice", async (req, res) => {
 
     // ✅ FIXED PUPPETEER LAUNCH
     const browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        "--no-sandbox",
-        "--disable-setuid-sandbox"
-      ],
+      args: chromium.args,
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      headless: true,
     });
 
     const page = await browser.newPage();
@@ -79,7 +75,6 @@ app.post("/generate-invoice", async (req, res) => {
     res.set({
       "Content-Type": "application/pdf",
       "Content-Disposition": "attachment; filename=invoice.pdf",
-      "Content-Length": pdfBuffer.length,
     });
     res.send(pdfBuffer);
 
@@ -135,13 +130,9 @@ app.post("/generate-quotation", async (req, res) => {
 
     // ✅ FIXED PUPPETEER LAUNCH
     const browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        "--no-sandbox",
-        "--disable-setuid-sandbox"
-      ],
+      args: chromium.args,
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      headless: true,
     });
 
     const page = await browser.newPage();
@@ -157,7 +148,6 @@ app.post("/generate-quotation", async (req, res) => {
     res.set({
       "Content-Type": "application/pdf",
       "Content-Disposition": "attachment; filename=quotation.pdf",
-      "Content-Length": pdfBuffer.length,
     });
     res.send(pdfBuffer);
 
