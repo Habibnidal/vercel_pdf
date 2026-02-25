@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invoice Generator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 6px; }
+    button { padding: 6px 12px; margin-top: 8px; }
+    input { width: 100%; }
+  </style>
+</head>
+
+<body>
+
+<h2>Generate Invoice</h2>
+
+<form method="POST" action="/generate-invoice">
+
+  <!-- CLIENT NAME -->
+  <label>Client Name</label><br>
+  <input name="client_name" required><br><br>
+
+  <!-- INVOICE NO -->
+  <label>Invoice No</label><br>
+  <input name="invoice_no" required placeholder="e.g. 3883"><br><br>
+
+  <!-- ITEMS TABLE -->
+  <table id="itemsTable">
+    <tr>
+      <th>Description</th>
+      <th>Qty</th>
+      <th>Unit Price</th>
+      <th>Action</th>
+    </tr>
+
+    <tr>
+      <td><input name="desc[]" required></td>
+      <td><input name="qty[]" type="number" required></td>
+      <td><input name="price[]" type="number" required></td>
+      <td><button type="button" onclick="removeRow(this)">❌</button></td>
+    </tr>
+  </table>
+
+  <button type="button" onclick="addRow()">➕ Add Row</button><br><br>
+  <button type="submit">Generate PDF</button>
+
+</form>
+
+<script>
+function addRow() {
+  const table = document.getElementById("itemsTable");
+  const row = table.insertRow(-1);
+  row.innerHTML = `
+    <td><input name="desc[]" required></td>
+    <td><input name="qty[]" type="number" required></td>
+    <td><input name="price[]" type="number" required></td>
+    <td><button type="button" onclick="removeRow(this)">❌</button></td>
+  `;
+}
+
+function removeRow(btn) {
+  btn.closest("tr").remove();
+}
+</script>
+
+</body>
+</html>
